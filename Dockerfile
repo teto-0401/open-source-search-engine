@@ -8,7 +8,7 @@
   WORKDIR /app
   COPY . .
   RUN make -j2 CPPFLAGS+=" -std=gnu++11"
-  RUN if [ ! -f gb.conf ]; then : > gb.conf; fi; \
+  RUN if [ ! -f gb.conf ]; then if [ -f gb.conf.saving ]; then cp gb.conf.saving gb.conf; else : > gb.conf; fi; fi; \
       if [ ! -f hosts.conf ]; then printf "# The Gigablast host configuration file.\n# Tells us what hosts are participating in the distributed search engine.\n\n0 5998 7000 8000 9000 127.0.0.1 127.0.0.1 /app/\n\nnum-mirrors: 0\n\n# Format:\n# hostId dnsPort httpsPort httpPort udpPort ip1 ip2 workingDir\n" > hosts.conf; fi; \
       mkdir -p /app/opt; \
       if ls /app/*.dat >/dev/null 2>&1; then cp /app/*.dat /app/opt/; fi; \
@@ -17,7 +17,7 @@
   FROM debian:bookworm-slim
 
   RUN apt-get update && apt-get install -y --no-install-recommends \
-      ca-certificates libssl3 zlib1g \
+      ca-certificates libssl3 zlib1g binutils \
    && rm -rf /var/lib/apt/lists/*
 
   WORKDIR /app
