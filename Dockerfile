@@ -7,7 +7,7 @@
 
   WORKDIR /app
   COPY . .
-  RUN make -j2 CPPFLAGS+=" -std=gnu++03"
+  RUN make -j2 CPPFLAGS+=" -std=gnu++11"
 
   FROM debian:bookworm-slim
 
