@@ -1,21 +1,17 @@
-# ---- build stage ----
+
   FROM debian:bookworm-slim AS build
 
-  RUN apt-get update && apt-get install -y --no-install-recommends
-  \
-      build-essential g++ make ca-certificates libssl-dev zlib1g-
-  dev \
+  RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential g++ make ca-certificates libssl-dev zlib1g-dev \
    && rm -rf /var/lib/apt/lists/*
 
   WORKDIR /app
   COPY . .
   RUN make -j2
 
-  # ---- runtime stage ----
   FROM debian:bookworm-slim
 
-  RUN apt-get update && apt-get install -y --no-install-recommends
-  \
+  RUN apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates libssl3 zlib1g \
    && rm -rf /var/lib/apt/lists/*
 
