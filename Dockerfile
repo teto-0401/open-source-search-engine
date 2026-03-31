@@ -26,6 +26,11 @@
   COPY --from=build /app/hosts.conf /app/hosts.conf
   COPY --from=build /app/html /app/html
   COPY --from=build /app/gb.pem /app/gb.pem
+  COPY --from=build /app/ucdata /app/ucdata
+  COPY --from=build /app/antiword /app/antiword
+  COPY --from=build /app/antiword-dir /app/antiword-dir
+  COPY --from=build /app/pdftohtml /app/pdftohtml
+  COPY --from=build /app/pstotext /app/pstotext
   COPY --from=build /app/opt/ /app/
 
   EXPOSE 8000 7000
